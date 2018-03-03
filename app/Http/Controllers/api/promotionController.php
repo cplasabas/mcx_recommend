@@ -21,7 +21,7 @@ class promotionController extends Controller
     }
 
     public function index(Request $request){
-    	$data = Promotion::all();
+    	$data = Promotion::limit(10)->get();
 
         return $data;
     }

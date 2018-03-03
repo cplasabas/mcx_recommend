@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 class orderController extends Controller
 {
@@ -40,6 +41,16 @@ class orderController extends Controller
 
     public function getOrder($id){
         $data = Order::find($id);
+
+        return $data;
+    }
+
+    public function getOrdersFull(Request $request){
+        $data = DB::table('orders')
+                ->select(DB::raw('orders.user_id,products.name, count(orders.product_id) as count'))
+                ->leftJoin('products', 'orders.product_id', '=', 'products.id')
+                ->groupBy('orders.user_id', 'products.name')
+                ->get();
 
         return $data;
     }

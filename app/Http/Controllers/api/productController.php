@@ -21,7 +21,7 @@ class productController extends Controller
     }
 
     public function index(Request $request){
-    	$data = Product::all();
+    	$data = Product::limit(10)->get();
 
         return $data;
     }
